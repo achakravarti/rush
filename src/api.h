@@ -8,6 +8,14 @@
 #include <threads.h>
 
 
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_pure __attribute__((pure))
+#else
+#   define rush_pure
+#   warning rush_pure has no effect on non GCC-compatible compilers
+#endif
+
+
 typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 #define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
