@@ -1,4 +1,4 @@
-LIB_INP = bld/mpool.o
+LIB_INP = bld/mpool.o bld/string.o
 LIB_OUT = bld/librush.so
 LIB_OPT = -shared -g -O2
 
