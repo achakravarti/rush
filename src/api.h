@@ -53,6 +53,7 @@ typedef int rush_erno;
 #define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
 #define RUSH_ERNO_MPOOL ((rush_erno) 0x2)
 #define RUSH_ERNO_RANGE ((rush_erno) 0x3)
+#define RUSH_ERNO_STRING ((rush_erno) 0x4)
 
 
 #define rush_erno_get() \
@@ -94,6 +95,10 @@ do {                                \
         rush_assert((p), RUSH_ERNO_RANGE)
 
 
+#define rush_assert_string(s) \
+        rush_assert((s) && *(s), RUSH_ERNO_STRING)
+
+
 #define rush_try(p)                             \
 do {                                            \
         if (rush_unlikely (rush__erno__ = (p))) \
@@ -107,6 +112,41 @@ rush_mpool_alloc(void **bfr, size_t sz);
 
 extern rush_erno
 rush_mpool_realloc(void **bfr, size_t sz);
+
+
+typedef char rush_string;
+
+extern rush_erno
+rush_string_new(rush_string **ctx, const char *cstr);
+
+inline rush_erno
+rush_string_copy(rush_string **ctx, const rush_string *src)
+{
+        return rush_string_new (ctx, src);
+}
+
+extern rush_erno
+rush_string_len(const rush_string *ctx, size_t *len);
+
+extern rush_erno
+rush_string_sz(const rush_string *ctx, size_t *sz);
+
+extern rush_erno
+rush_string_cmp(const rush_string *ctx, const rush_string *rhs, int *cmp);
+
+extern rush_erno
+rush_string_add(const rush_string **ctx, const rush_string *add);
+
+extern rush_erno
+rush_string_find(const rush_string *ctx, const rush_string *what, size_t *loc);
+
+extern rush_erno
+rush_string_replace_first(rush_string **ctx, const rush_string *what,
+                          const rush_string *with);
+
+extern rush_erno
+rush_string_replace(rush_string **ctx, const rush_string *what,
+                    const rush_string *with);
 
 
 #endif /* !defined REST_MICRO_SERVICE_HELPER */
