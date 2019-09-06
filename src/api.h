@@ -16,6 +16,14 @@
 #endif
 
 
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_hot __attribute__((hot))
+#else
+#   define rush_hot
+#   warning rush_hot has no effect on non GCC-compatible compilers
+#endif
+
+
 typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 #define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
