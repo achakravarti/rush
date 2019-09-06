@@ -8,6 +8,46 @@
 #include <threads.h>
 
 
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_pure __attribute__((pure))
+#else
+#   define rush_pure
+#   warning rush_pure has no effect on non GCC-compatible compilers
+#endif
+
+
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_hot __attribute__((hot))
+#else
+#   define rush_hot
+#   warning rush_hot has no effect on non GCC-compatible compilers
+#endif
+
+
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_cold __attribute__((cold))
+#else
+#   define rush_cold
+#   warning rush_cold has no effect on non GCC-compatible compilers
+#endif
+
+
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_likely(p) (__builtin_expect(!!(p), 1))
+#else
+#   define rush_likely
+#   warning rush_likely has no effect on non GCC-compatible compilers
+#endif
+
+
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_unlikely(p) (__builtin_expect(!!(p), 0))
+#else
+#   define rush_unlikely
+#   warning rush_unlikely has no effect on non GCC-compatible compilers
+#endif
+
+
 typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 #define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
@@ -39,7 +79,7 @@ typedef int rush_erno;
 
 #define rush_assert(p, e) \
 do {                                \
-        if (!(p)) {                 \
+        if (rush_unlikely (!(p))) { \
                 rush__erno__ = (e); \
                 goto RUSH__CATCH__; \
         }                           \
@@ -54,10 +94,10 @@ do {                                \
         rush_assert((p), RUSH_ERNO_RANGE)
 
 
-#define rush_try(p)                 \
-do {                                \
-        if ((rush__erno__ = (p)))   \
-                goto RUSH__CATCH__; \
+#define rush_try(p)                             \
+do {                                            \
+        if (rush_unlikely (rush__erno__ = (p))) \
+                goto RUSH__CATCH__;             \
 } while (0)
 
 
