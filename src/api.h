@@ -12,6 +12,20 @@ typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 
 
+#define RUSH_TRY                                       \
+        register rush_erno rush__erno_= RUSH_ERNO_NIL; \
+        goto RUSH__TRY;                                \
+        RUSH__TRY__
+
+
+#define RUSH_CATCH         \
+        goto RUSH_FINALLY; \
+        RUSH__CATCH__
+
+
+#define RUSH_FINALLY
+
+
 extern rush_erno
 rush_mpool_alloc(void **bfr, size_t sz);
 
