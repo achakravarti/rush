@@ -12,6 +12,14 @@ typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 
 
+#define rush_erno_get() \
+        ((const rush_erno) rush__erno__
+
+
+#define rush_erno_set(e) \
+        (rush__erno__ = (e))
+
+
 #define RUSH_TRY                                       \
         register rush_erno rush__erno_= RUSH_ERNO_NIL; \
         goto RUSH__TRY;                                \
