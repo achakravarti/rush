@@ -34,6 +34,22 @@ typedef int rush_erno;
 #define RUSH_FINALLY
 
 
+#define rush_assert(p, e) \
+do {                                \
+        if (!(p)) {                 \
+                rush__erno__ = (e); \
+                goto RUSH__CATCH__; \
+        }                           \
+} while (0)
+
+
+#define rush_try(p)                 \
+do {                                \
+        if ((rush__erno__ = (p)))   \
+                goto RUSH__CATCH__; \
+} while (0)
+
+
 extern rush_erno
 rush_mpool_alloc(void **bfr, size_t sz);
 
