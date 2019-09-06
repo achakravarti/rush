@@ -8,7 +8,7 @@ static thread_local bool gc_flag = false;
 static inline void
 gc_init(void)
 {
-        if (!gc_flag) {
+        if (rush_unlikely (!gc_flag)) {
                 GC_INIT();
                 gc_flag = true;
         }
