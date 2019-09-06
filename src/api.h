@@ -79,7 +79,7 @@ typedef int rush_erno;
 
 #define rush_assert(p, e) \
 do {                                \
-        if (!(p)) {                 \
+        if (rush_unlikely (!(p))) { \
                 rush__erno__ = (e); \
                 goto RUSH__CATCH__; \
         }                           \
@@ -94,10 +94,10 @@ do {                                \
         rush_assert((p), RUSH_ERNO_RANGE)
 
 
-#define rush_try(p)                 \
-do {                                \
-        if ((rush__erno__ = (p)))   \
-                goto RUSH__CATCH__; \
+#define rush_try(p)                             \
+do {                                            \
+        if (rush_unlikely (rush__erno__ = (p))) \
+                goto RUSH__CATCH__;             \
 } while (0)
 
 
