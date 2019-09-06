@@ -46,6 +46,14 @@ do {                                \
 } while (0)
 
 
+#define rush_assert_handle(p) \
+        rush_assert((p), RUSH_ERNO_HANDLE)
+
+
+#define rush_assert_range(p) \
+        rush_assert((p), RUSH_ERNO_RANGE)
+
+
 #define rush_try(p)                 \
 do {                                \
         if ((rush__erno__ = (p)))   \
