@@ -10,6 +10,9 @@
 
 typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
+#define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
+#define RUSH_ERNO_MPOOL ((rush_erno) 0x2)
+#define RUSH_ERNO_RANGE ((rush_erno) 0x3)
 
 
 #define rush_erno_get() \
@@ -22,16 +25,16 @@ typedef int rush_erno;
 
 #define RUSH_TRY                                       \
         register rush_erno rush__erno_= RUSH_ERNO_NIL; \
-        goto RUSH__TRY;                                \
+        goto RUSH__TRY__;                              \
         RUSH__TRY__
 
 
-#define RUSH_CATCH         \
-        goto RUSH_FINALLY; \
+#define RUSH_CATCH            \
+        goto RUSH__FINALLY__; \
         RUSH__CATCH__
 
 
-#define RUSH_FINALLY
+#define RUSH_FINALLY RUSH__FINALLY__
 
 
 #define rush_assert(p, e) \
