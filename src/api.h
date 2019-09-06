@@ -40,6 +40,14 @@
 #endif
 
 
+#if (defined __GNUC__ || defined __clang__)
+#   define rush_unlikely(p) (__builtin_expect(!!(p), 0))
+#else
+#   define rush_unlikely
+#   warning rush_unlikely has no effect on non GCC-compatible compilers
+#endif
+
+
 typedef int rush_erno;
 #define RUSH_ERNO_NIL ((rush_erno) 0x0)
 #define RUSH_ERNO_HANDLE ((rush_erno) 0x1)
