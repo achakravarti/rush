@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdarg.h>
 #include <threads.h>
 
 
@@ -104,6 +105,30 @@ do {                                            \
         if (rush_unlikely (rush__erno__ = (p))) \
                 goto RUSH__CATCH__;             \
 } while (0)
+
+
+extern void
+rush_log_open(const char *path, bool flush);
+
+
+extern void
+rush_log_close(void);
+
+
+extern void
+rush_log_write__(const char, const char *, ...);
+
+
+#define rush_log_trace(m, ...) \
+        rush_log_write__('T', (m), ##__VA_ARGS__)
+
+
+#define rush_log_warning(m, ...) \
+        rush_log_write__('W', (m), ##__VA_ARGS__)
+
+
+#define rush_log_error(m, ...) \
+        rush_log_write__('E', (m), ##__VA_ARGS__)
 
 
 extern rush_erno
